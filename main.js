@@ -3,6 +3,7 @@ import { DirectoryLoader } from 'langchain/document_loaders/fs/directory';
 import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf';
 import * as dotenv from 'dotenv';
 import { createPineconeIndex } from './createPineconeIndex.js';
+import { updatePineconeIndex } from './updatePineconeIndex.js';
 
 dotenv.config();
 
@@ -23,5 +24,6 @@ client.index({
 });
 
 (async () => {
-  await createPineconeIndex(client, indexName, vectorDimension);
+  // await createPineconeIndex(client, indexName, vectorDimension);
+  await updatePineconeIndex(client, indexName, docs);
 })();
