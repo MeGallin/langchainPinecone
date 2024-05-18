@@ -1,8 +1,8 @@
 import { Pinecone } from '@pinecone-database/pinecone';
 import { DirectoryLoader } from 'langchain/document_loaders/fs/directory';
 import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf';
-
 import * as dotenv from 'dotenv';
+import { createPineconeIndex } from './createPineconeIndex.js';
 
 dotenv.config();
 
@@ -12,8 +12,16 @@ const loader = new DirectoryLoader('./documents', {
 
 const docs = await loader.load('./documents');
 
-console.log(docs);
-
 const question = 'How does the ABS work ?';
 const indexName = process.env.PINECONE_ENVIRONMENT;
 const vectorDimension = 1536;
+
+const client = new Pinecone();
+
+client.index({
+  apiKey: process.env.PINECONE_API_KEY,
+});
+
+(async () => {
+  await createPineconeIndex(client, indexName, vectorDimension);
+})();
