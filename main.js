@@ -4,6 +4,7 @@ import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf';
 import * as dotenv from 'dotenv';
 import { createPineconeIndex } from './createPineconeIndex.js';
 import { updatePineconeIndex } from './updatePineconeIndex.js';
+import { queryPineconeIndex } from './queryPineconeIndex.js';
 
 dotenv.config();
 
@@ -13,7 +14,7 @@ const loader = new DirectoryLoader('./documents', {
 
 const docs = await loader.load('./documents');
 
-const question = 'How does the ABS work ?';
+const question = 'what is the difference between VAR and LET ?';
 const indexName = process.env.PINECONE_ENVIRONMENT;
 const vectorDimension = 1536;
 
@@ -25,5 +26,6 @@ client.index({
 
 (async () => {
   // await createPineconeIndex(client, indexName, vectorDimension);
-  await updatePineconeIndex(client, indexName, docs);
+  // await updatePineconeIndex(client, indexName, docs);
+  await queryPineconeIndex(client, indexName, question);
 })();
