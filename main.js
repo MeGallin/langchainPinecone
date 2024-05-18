@@ -14,7 +14,8 @@ const loader = new DirectoryLoader('./documents', {
 
 const docs = await loader.load('./documents');
 
-const question = 'what is the difference between VAR and LET ?';
+const question =
+  'Can you provide me with step by step instructions on how to reset the type pressure warning ?';
 const indexName = process.env.PINECONE_ENVIRONMENT;
 const vectorDimension = 1536;
 

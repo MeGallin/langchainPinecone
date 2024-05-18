@@ -1,51 +1,57 @@
+// Update the pinecone Index
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
 import { v4 as uuidv4 } from 'uuid';
 
-const createEmbeddings = async (text, apiKey, batchSize) => {
-  try {
-    const textSplitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 2000,
-    });
-    const chunks = await textSplitter.createDocuments([text]);
-    const embeddings = new OpenAIEmbeddings({ apiKey, batchSize });
-    const embeddingsArrays = await embeddings.embedDocuments(
-      chunks.map((chunk) => chunk.pageContent.replace(/\n/g, '')),
-    );
-    return { chunks, embeddingsArrays };
-  } catch (error) {
-    console.error('Failed to create embeddings:', error);
-    throw error; // Re-throw the error after logging it
-  }
-};
-
-export const updatePineconeIndex = async (client, indexName, docs, apiKey) => {
+export const updatePineconeIndex = async (client, indexName, docs) => {
   const index = client.Index(indexName);
 
-  for (const doc of docs) {
-    try {
-      console.log(`Processing document: ${doc.metadata.source}`);
-      const { chunks, embeddingsArrays } = await createEmbeddings(
-        doc.pageContent,
-        apiKey,
-        512,
-      );
+  // Loop through the docs
 
-      const batch = chunks.map((chunk, idx) => ({
-        id: uuidv4(),
+  for (const doc of docs) {
+    console.log(`Processing documents: ${doc.metadata.source}`);
+
+    const textPath = doc.metadata.source;
+    const text = doc.pageContent;
+    const textSplitter = new RecursiveCharacterTextSplitter({
+      chuckSize: 1000,
+    });
+
+    console.log(`Splitting document into chunks`);
+
+    const chunks = await textSplitter.createDocuments([text]);
+    const batchSize = 512;
+
+    console.log(`Chunks = ${chunks}, sizes`);
+
+    const embeddingsArrays = await new OpenAIEmbeddings({
+      apiKey: process.env.OPEN_AI_API_KEY,
+      batchSize: batchSize,
+    }).embedDocuments(
+      chunks.map((chunk) => chunk.pageContent.replace(/\n/g, '')),
+    );
+
+    let batch = [];
+    for (let idx = 0; idx < chunks.length; idx++) {
+      const chunk = chunks[idx];
+      const vector = {
+        id: `${uuidv4()}`,
         values: embeddingsArrays[idx],
         metadata: {
           ...chunk.metadata,
           loc: JSON.stringify(chunk.metadata.loc),
           pageContent: chunk.pageContent,
-          textPath: doc.metadata.source,
+          textPath: textPath,
         },
-      }));
+      };
 
-      // Upert into vector database
+      batch.push(vector);
+
+      console.log(batch);
+
+      //Might want to do some checks
       await index.upsert(batch);
-    } catch (error) {
-      console.error(`Error processing document ${doc.metadata.source}:`, error);
     }
+    console.log(`Pinecone has been updated with ${chunks.length}`);
   }
 };
