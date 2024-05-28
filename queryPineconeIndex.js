@@ -38,15 +38,15 @@ export const queryPineconeIndex = async (client, indexName, question) => {
 
   if (queryResponse.matches.length) {
     const chain = loadQAStuffChain(llm);
+
     const concatenatedPageContent = queryResponse.matches
       .map((match) => match.metadata.pageContent)
       .join(' ');
 
-    const result = await chain.call({
+    return await chain.call({
       input_documents: [new Document({ pageContent: concatenatedPageContent })],
-      question: question,
+      question,
     });
-    console.log(`Answer: ${result.text}`);
   } else {
     console.log(`No query matches!! Please re-phase the question`);
   }

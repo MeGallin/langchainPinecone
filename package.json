@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js",
+    "dev": "nodemon main.js"
   },
   "keywords": [],
   "author": "Gary Allin",
@@ -15,9 +17,13 @@
     "@langchain/openai": "^0.0.32",
     "@pinecone-database/pinecone": "^2.2.1",
     "dotenv": "^16.4.5",
+    "express": "^4.19.2",
     "langchain": "^0.2.0",
     "openai": "^4.47.1",
     "pdf-parse": "^1.1.1",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.1"
   }
 }
