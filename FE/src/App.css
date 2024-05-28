@@ -1,0 +1,26 @@
+/* CSS file */
+
+/* Apply the font to the entire body */
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Optionally, set different font weights for headings and other elements */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700; /* Bold font weight */
+}
+
+p,
+span,
+a,
+li,
+div {
+  font-weight: 400; /* Regular font weight */
+}

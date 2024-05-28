@@ -1,0 +1,109 @@
+/* CSS Reset - Modern Version */
+
+/* Remove default margin, padding, and box-sizing */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set default font size and line height */
+html {
+  font-size: 100%; /* 16px */
+  line-height: 1.5;
+}
+
+/* Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Remove default list styles */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Remove default text decoration and color inheritance for links */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Remove default table borders and spacing */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Ensure media elements fit their container */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Ensure form elements have a consistent appearance */
+button,
+input,
+select,
+textarea {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+}
+
+/* Remove default appearance for buttons */
+button {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+/* Remove default appearance for progress elements */
+progress {
+  vertical-align: baseline;
+}
+
+/* Ensure blockquote and figures have consistent margins */
+blockquote,
+figure {
+  margin: 0;
+}
+
+/* Ensure iframe and embed elements are responsive */
+iframe,
+embed {
+  max-width: 100%;
+}
+
+/* Remove default appearance for fieldset and legend */
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+legend {
+  display: table;
+  max-width: 100%;
+  white-space: normal;
+}
+
+/* Remove default appearance for details and summary */
+details {
+  display: block;
+}
+
+summary {
+  display: list-item;
+}
