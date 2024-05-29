@@ -1,4 +1,7 @@
-/* CSS file */
+:root {
+  --header-height: 5vh; /* Adjust the height as needed */
+  --footer-height: 5vh; /* Adjust the height as needed */
+}
 
 /* Apply the font to the entire body */
 body {
@@ -23,4 +26,30 @@ a,
 li,
 div {
   font-weight: 400; /* Regular font weight */
+}
+
+/* Style.css */
+body,
+html {
+  height: 100%;
+}
+
+#main-container {
+  border: 2px solid green;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  border: 2px solid green;
+  width: 100%;
+  height: var(--header-height);
+}
+
+footer {
+  border: 2px solid green;
+  margin-top: auto;
+  width: 100%;
+  height: var(--footer-height);
 }
