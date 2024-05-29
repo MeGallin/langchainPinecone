@@ -1,11 +1,16 @@
 import './App.css';
+import Footer from './components/common/Footer';
+import Header from './components/common/Header';
 
 function App() {
-  return (
-    <>
-      <h1>TEST</h1>
-    </>
-  );
+
+    return (
+      <div id="main-container">
+        <Header />
+        {/* Main content goes here */}
+        <Footer />
+      </div>
+    );
 }
 
 export default App;
