@@ -66,15 +66,12 @@
   color: white;
 }
 .responses-container {
-  border: slategray 1px solid;
   overflow-y: auto;
   max-width: 600px;
   padding: 0.5em;
 }
 .response {
   margin-top: 20px;
-  /* width: 100%;
-  max-width: 600px; */
   text-align: left;
   background-color: pink;
   padding: 0.5em;
