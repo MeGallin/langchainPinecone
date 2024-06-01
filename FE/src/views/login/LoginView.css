@@ -1,0 +1,26 @@
+/* Styles for the container holding the two sections */
+.container {
+  background-color: lightblue;
+  display: flex;
+  flex-wrap: wrap; /* Allows items to wrap onto the next line on smaller screens */
+  justify-content: center; /* Center the sections horizontally */
+  align-items: center; /* Center the sections vertically */
+}
+
+/* Styles for each section */
+.section {
+  flex: 1 1 50%; /* Each section takes up half of the container */
+  padding: 20px; /* Add padding for spacing */
+  border: 2px solid #ccc; /* Add a border */
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 600px) {
+  .section {
+    flex: 1 1 100%; /* Each section takes full width on smaller screens */
+  }
+}

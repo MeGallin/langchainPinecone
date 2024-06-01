@@ -1,6 +1,6 @@
 :root {
-  --header-height: 5vh; /* Adjust the height as needed */
-  --footer-height: 5vh; /* Adjust the height as needed */
+  --header-height: 4em; /* Adjust the height as needed */
+  --footer-height: 2em; /* Adjust the height as needed */
 }
 
 /* Apply the font to the entire body */
@@ -35,10 +35,10 @@ html {
 }
 
 #main-container {
-  border: 2px solid green;
+  border: 2px solid blue;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: calc(100vh - var(--header-height) + var(--footer-height));
 }
 
 header {
@@ -52,4 +52,9 @@ footer {
   margin-top: auto;
   width: 100%;
   height: var(--footer-height);
+}
+
+/* Active for Routes */
+.active {
+  border-bottom: 2px solid crimson;
 }
