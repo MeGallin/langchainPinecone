@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { atom, useAtom } from 'jotai';
 import './QuestionComponent.css';
 
 interface ResponseType {
@@ -6,11 +7,17 @@ interface ResponseType {
   answer: string;
 }
 
+// Atoms for state management
+const questionAtom = atom<string>('');
+const responsesAtom = atom<ResponseType[]>([]);
+const errorAtom = atom<string | null>(null);
+const loadingAtom = atom<boolean>(false);
+
 const QuestionComponent: React.FC = () => {
-  const [question, setQuestion] = useState<string>('');
-  const [responses, setResponses] = useState<ResponseType[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [question, setQuestion] = useAtom(questionAtom);
+  const [responses, setResponses] = useAtom(responsesAtom);
+  const [error, setError] = useAtom(errorAtom);
+  const [loading, setLoading] = useAtom(loadingAtom);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuestion(event.target.value);
@@ -58,7 +65,7 @@ const QuestionComponent: React.FC = () => {
     }
 
     const recognition = new SpeechRecognition();
-    recognition.lang = 'en-US';
+    recognition.lang = 'en-GB';
     recognition.interimResults = false;
     recognition.maxAlternatives = 1;
 
@@ -77,7 +84,7 @@ const QuestionComponent: React.FC = () => {
   return (
     <div className="question-form-container">
       <form onSubmit={handleSubmit} className="question-form">
-        <label htmlFor="question">Question:</label>
+        <label htmlFor="question">Ask a question about your CLS?</label>
         <input
           type="text"
           id="question"
