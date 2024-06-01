@@ -48,6 +48,32 @@ const QuestionComponent: React.FC = () => {
     }
   };
 
+  const handleVoiceInput = () => {
+    const SpeechRecognition =
+      (window as any).SpeechRecognition ||
+      (window as any).webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      setError('Speech recognition is not supported in this browser.');
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
+      const transcript = event.results[0][0].transcript;
+      setQuestion(transcript);
+    };
+
+    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+      setError('Error occurred in recognition: ' + event.error);
+    };
+
+    recognition.start();
+  };
+
   return (
     <div className="question-form-container">
       <form onSubmit={handleSubmit} className="question-form">
@@ -67,20 +93,35 @@ const QuestionComponent: React.FC = () => {
           >
             Submit
           </button>
-          <button type="button" onClick={clearInput} className="button-clear">
+          <button
+            type="button"
+            onClick={clearInput}
+            disabled={!question.trim()}
+            className="button-clear"
+          >
             Clear Input
+          </button>
+          <button
+            type="button"
+            onClick={handleVoiceInput}
+            className="button-voice"
+          >
+            Use Voice Input
           </button>
         </div>
       </form>
-      {loading && <div className="spinner"></div>}
-      {error && <p className="error">{error}</p>}
-      <div className="responses">
-        {responses.map((response, index) => (
-          <div key={index} className="response">
-            <h3>Question: {response.question}</h3>
-            <p>Answer: {response.answer}</p>
-          </div>
-        ))}
+
+      <div className="responses-container">
+        {loading && <div className="spinner"></div>}
+        {error && <p className="error">{error}</p>}
+        <div className="responses">
+          {responses.map((response, index) => (
+            <div key={index} className="response">
+              <h3>Question: {response.question}</h3>
+              <p>Answer: {response.answer}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
