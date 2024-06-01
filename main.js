@@ -8,11 +8,13 @@ import * as dotenv from 'dotenv';
 import { createPineconeIndex } from './createPineconeIndex.js';
 import { updatePineconeIndex } from './updatePineconeIndex.js';
 import { queryPineconeIndex } from './queryPineconeIndex.js';
+import cors from 'cors';
 
 dotenv.config();
 
 // Create Express app
 const app = express();
+app.use(cors());
 const PORT = process.env.PORT || 3000;
 app.use(bodyParser.json());
 
