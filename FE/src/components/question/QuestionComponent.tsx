@@ -12,12 +12,15 @@ const questionAtom = atom<string>('');
 const responsesAtom = atom<ResponseType[]>([]);
 const errorAtom = atom<string | null>(null);
 const loadingAtom = atom<boolean>(false);
+const listeningAtom = atom<boolean>(false);
 
 const QuestionComponent: React.FC = () => {
   const [question, setQuestion] = useAtom(questionAtom);
   const [responses, setResponses] = useAtom(responsesAtom);
   const [error, setError] = useAtom(errorAtom);
   const [loading, setLoading] = useAtom(loadingAtom);
+  const [listening, setListening] = useAtom(listeningAtom);
+  const recognitionRef = React.useRef<SpeechRecognition | null>(null);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuestion(event.target.value);
@@ -55,7 +58,7 @@ const QuestionComponent: React.FC = () => {
     }
   };
 
-  const handleVoiceInput = () => {
+  const handleVoiceInputStart = () => {
     const SpeechRecognition =
       (window as any).SpeechRecognition ||
       (window as any).webkitSpeechRecognition;
@@ -78,7 +81,17 @@ const QuestionComponent: React.FC = () => {
       setError('Error occurred in recognition: ' + event.error);
     };
 
+    recognitionRef.current = recognition;
     recognition.start();
+    setListening(true);
+  };
+
+  const handleVoiceInputStop = () => {
+    if (recognitionRef.current) {
+      recognitionRef.current.stop();
+      recognitionRef.current = null;
+      setListening(false);
+    }
   };
 
   return (
@@ -90,12 +103,13 @@ const QuestionComponent: React.FC = () => {
           id="question"
           value={question}
           onChange={handleInputChange}
+          placeholder="Ask a question"
           required
         />
         <div className="button-container">
           <button
             type="submit"
-            disabled={!question.trim()}
+            disabled={!question.trim() || loading}
             className="submit-btn"
           >
             Submit
@@ -103,17 +117,20 @@ const QuestionComponent: React.FC = () => {
           <button
             type="button"
             onClick={clearInput}
-            disabled={!question.trim()}
+            disabled={!question.trim() || loading}
             className="button-clear"
           >
             Clear Input
           </button>
           <button
             type="button"
-            onClick={handleVoiceInput}
-            className="button-voice"
+            onMouseDown={handleVoiceInputStart}
+            onMouseUp={handleVoiceInputStop}
+            onMouseLeave={handleVoiceInputStop}
+            className={`button-voice ${listening ? 'listening' : ''}`}
+            disabled={loading}
           >
-            Use Voice Input
+            {listening ? 'Listening...' : 'Press and Hold'}
           </button>
         </div>
       </form>
