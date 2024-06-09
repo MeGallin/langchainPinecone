@@ -1,0 +1,38 @@
+.home-page {
+  text-align: center;
+}
+
+.hero-section {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 50px 20px;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.main {
+  padding: 20px;
+}
+
+.intro-section,
+.question-section,
+.features-section,
+.faq-section {
+  background-color: white;
+  margin: 20px 0;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+ul {
+  text-align: left;
+  padding-left: 20px;
+}
+
+.faq {
+  text-align: left;
+  margin-top: 10px;
+}
