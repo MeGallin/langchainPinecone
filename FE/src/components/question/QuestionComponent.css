@@ -1,177 +1,133 @@
-.question-form-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  box-sizing: border-box;
-  text-align: center;
-  height: calc(98vh - (var(--header-height) + var(--footer-height)));
-  overflow-y: auto;
-  width: auto;
-}
-
-.question-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 600px;
-  background-color: aqua;
-  padding: 0.5em;
-}
-
-.question-form label {
-  font-size: 1.2em;
-  margin-bottom: 10px;
-}
-
-.question-form input {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.button-container {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 10px;
-  width: 100%;
-}
-
-.button-container button {
-  flex: 1;
-  padding: 10px;
+/* Base styles for buttons */
+button {
   border: none;
-  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 
-.submit-btn {
-  background-color: #4caf50;
-  color: white;
+/* Disabled button styles */
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
-.button-clear {
-  background-color: #f44336;
-  color: white;
+/* Submit button styles */
+button.submit-btn {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+button.submit-btn:hover:not(:disabled) {
+  background-color: var(--primary-color-dark);
+}
+button.submit-btn:disabled {
+  background-color: var(--primary-color-light);
 }
 
-.button-voice {
-  background-color: slategray;
-  color: white;
+/* Clear Input button styles */
+button.button-clear {
+  background-color: var(--secondary-color);
+  color: #fff;
 }
+button.button-clear:hover:not(:disabled) {
+  background-color: var(--secondary-color-dark);
+}
+button.button-clear:disabled {
+  background-color: var(--secondary-color-light);
+}
+
+/* Voice Input button styles */
+button.button-voice {
+  background-color: var(--accent-color);
+  color: #fff;
+}
+button.button-voice:hover:not(:disabled) {
+  background-color: var(--accent-color-dark);
+}
+button.button-voice:disabled {
+  background-color: var(--accent-color-light);
+}
+
+/* Voice Input active listening state */
+button.button-voice.listening {
+  background-color: var(--active-listening-color);
+  color: #000;
+}
+
+/* Form container */
+.question-form-container {
+  background-color: var(--neutral-color);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Input styles */
+input[type='text'] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+/* Label styles */
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Spinner styles */
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 4px solid var(--primary-color);
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error message styles */
+.error {
+  color: var(--error-color);
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+/* Response container */
 .responses-container {
-  overflow-y: auto;
-  max-width: 600px;
-  padding: 0.5em;
-}
-.response {
   margin-top: 20px;
-  text-align: left;
-  background-color: pink;
-  padding: 0.5em;
+}
+
+/* Individual response styles */
+.response {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .response h3 {
-  margin: 0 0 5px;
+  margin: 0;
+  color: var(--primary-color);
 }
 
 .response p {
-  margin: 0;
-}
-
-.error {
-  color: red;
-  margin-top: 10px;
-}
-
-.responses {
-  margin-top: 20px;
-  width: 100%;
-  max-width: 600px;
-  box-sizing: border-box;
-}
-
-.spinner {
-  border: 4px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #4caf50;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  animation: spin 1s linear infinite;
-  margin-top: 20px;
-}
-
-/* Add these styles to your existing CSS file */
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-button.submit-btn:disabled {
-  background-color: #4caf50; /* Adjust to your preferred color */
-}
-
-button.button-clear:disabled {
-  background-color: #f44336; /* Adjust to your preferred color */
-}
-
-button.button-voice:disabled {
-  background-color: #2196f3; /* Adjust to your preferred color */
-}
-
-/* Add these styles to your existing CSS file */
-
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-button.submit-btn:disabled {
-  background-color: #4caf50; /* Adjust to your preferred color */
-}
-
-button.button-clear:disabled {
-  background-color: #f44336; /* Adjust to your preferred color */
-}
-
-button.button-voice:disabled {
-  background-color: #2196f3; /* Adjust to your preferred color */
-}
-
-button.button-voice.listening {
-  background-color: #ffeb3b; /* Adjust to your preferred color for active listening state */
-  color: black;
-}
-
-/* Media queries */
-@media (max-width: 600px) {
-  .question-form-container {
-    padding: 10px;
-  }
-
-  .question-form {
-    width: 100%;
-  }
-
-  .button-container {
-    flex-direction: column;
-    gap: 5px;
-  }
-
-  .button-container button {
-    width: 100%;
-  }
-
-  .response {
-    text-align: center;
-  }
+  margin: 5px 0 0;
+  color: #333;
 }

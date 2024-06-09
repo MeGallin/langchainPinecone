@@ -1,6 +1,18 @@
 :root {
   --header-height: 2em; /* Adjust the height as needed */
   --footer-height: 2em; /* Adjust the height as needed */
+  --primary-color: #2e86c1;
+  --secondary-color: #f39c12;
+  --accent-color: #9b59b6;
+  --neutral-color: #e5e8e8;
+  --primary-color-dark: #1a6ba5;
+  --primary-color-light: #a9cce3;
+  --secondary-color-dark: #d68910;
+  --secondary-color-light: #fad7a0;
+  --accent-color-dark: #884ea0;
+  --accent-color-light: #d2b4de;
+  --active-listening-color: #f7dc6f;
+  --error-color: #e74c3c;
 }
 
 /* Apply the font to the entire body */
@@ -8,6 +20,7 @@ body {
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   line-height: 1.5;
+  background-color: var(--neutral-color);
 }
 
 /* Optionally, set different font weights for headings and other elements */
@@ -35,23 +48,31 @@ html {
 }
 
 #main-container {
-  border: 2px solid blue;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
 header {
-  border: 2px solid green;
   width: 100%;
   height: var(--header-height);
+  background-color: var(--primary-color-dark);
+  color: white;
+  padding: 10px;
+  position: sticky;
+  top: 0;
 }
 
 footer {
-  border: 2px solid green;
   margin-top: auto;
   width: 100%;
   height: var(--footer-height);
+  background-color: var(--primary-color-dark);
+  color: white;
+  padding-top: 0.4em;
+
+  text-align: center;
+  font-size: 0.75em;
 }
 
 /* Active for Routes */
