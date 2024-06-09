@@ -5,10 +5,8 @@ import { DirectoryLoader } from 'langchain/document_loaders/fs/directory';
 import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf';
 import { DocxLoader } from '@langchain/community/document_loaders/fs/docx';
 import * as dotenv from 'dotenv';
-import { createPineconeIndex } from './createPineconeIndex.js';
-import { updatePineconeIndex } from './updatePineconeIndex.js';
-import { queryPineconeIndex } from './queryPineconeIndex.js';
 import cors from 'cors';
+import queryRoute from './routes/queryRoute.js';
 
 dotenv.config();
 
@@ -33,29 +31,16 @@ client.index({
   apiKey: process.env.PINECONE_API_KEY,
 });
 
+// Make the Pinecone client available to the route handlers
+app.locals.pineconeClient = client;
+
 (async () => {
   // await createPineconeIndex(client, indexName, vectorDimension);
   // await updatePineconeIndex(client, indexName, docs);
 })();
 
-// Define the POST endpoint
-app.post('/query', async (req, res) => {
-  const { question } = req.body;
-
-  if (!indexName || !question)
-    return res
-      .status(400)
-      .json({ error: 'indexName and question are required' });
-
-  try {
-    const result = await queryPineconeIndex(client, indexName, question);
-
-    res.json({ question, answer: result.text });
-  } catch (error) {
-    console.error('Error querying Pinecone vector store:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+// Use the routes
+app.use('/', queryRoute);
 
 // Start the server
 app.listen(PORT, () => {
